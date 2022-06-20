@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:01:33 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/19 13:44:20 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:03:29 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <mlx.h>
+
+
+typedef struct s_so_long
+{
+	int		x_pos;
+	int		y_pos;
+	int		counter;
+	void	*mlx;
+	void	*mlx_win;
+	char	**map;
+	char	**map_to_display;
+}	t_so_long;
+
 
 size_t	ft_strlen(char const *str);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
@@ -39,5 +52,10 @@ void	check_borders(char **map);
 void	check_firstlast_rows(char **map , int nb_rows);
 void	check_len_rows(char **map);
 int	get_nb_rows(char **map);
+void	display_player(void *mlx, void *mlx_win, int x, int y);
+void	display_coin(void *mlx, void *mlx_win, int x, int y);
+void	display_wall(void *mlx, void *mlx_win, int x, int y);
+void	display_door(void *mlx, void *mlx_win, int x, int y);
+void	display_floor(void *mlx, void *mlx_win, int x, int y);
 
 #endif
