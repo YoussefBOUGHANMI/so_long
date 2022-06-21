@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:01:33 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/20 22:03:29 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:07:15 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_so_long
 	int		x_pos;
 	int		y_pos;
 	int		counter;
+	int		nb_coin;
+	int		top_free;
 	void	*mlx;
 	void	*mlx_win;
 	char	**map;
@@ -57,5 +59,10 @@ void	display_coin(void *mlx, void *mlx_win, int x, int y);
 void	display_wall(void *mlx, void *mlx_win, int x, int y);
 void	display_door(void *mlx, void *mlx_win, int x, int y);
 void	display_floor(void *mlx, void *mlx_win, int x, int y);
+int	get_x_start(t_so_long *vars);
+int	get_x_end(t_so_long *vars);
+int	get_y_start(t_so_long *vars);
+int	get_y_end(t_so_long *vars);
+void	get_rowto_display(int y_start, int x_start, int x_end, t_so_long *vars);
 
 #endif

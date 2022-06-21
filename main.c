@@ -6,135 +6,86 @@
 /*   By: youssef <youssef.boughanmi.pro@gmail.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 17:59:19 by youssef           #+#    #+#             */
-/*   Updated: 2022/06/20 22:41:49 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:23:03 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"so_long.h"
 
-int	get_x_start(t_so_long *vars)
+
+
+void	free_map(char **map)
 {
-	int	len_x;
+	int len_map;
+	int	i;
 
-	len_x = ft_strlen(vars->map[0]);
-	if (len_x < 12)
-		return (0);
-	else if (vars->x_pos + 5 > len_x - 1)
-		return (len_x - 12);
-	else if (vars->x_pos - 5 < 0)
-		return (0);
-	else
-		return (vars->x_pos - 5);
-}
-
-int	get_x_end(t_so_long *vars)
-{
-	int	len_x;
-
-	len_x = ft_strlen(vars->map[0]);
-	if (len_x < 12)
-		return (len_x - 1);
-	else if (vars->x_pos - 5 < 0)
-		return (10);
-	else if (vars->x_pos + 5 > len_x - 1)
-		return (len_x - 1);
-	else
-		return (vars->x_pos + 5);
-}
-
-int	get_y_start(t_so_long *vars)
-{
-	int	len_y;
-
-	len_y = get_nb_rows(vars->map);
-	printf("len : %i\n" , len_y);
-	if (len_y < 12)
-		return (0);
-	else if (vars->y_pos + 5 > len_y - 1)
-		return (len_y - 12);
-	else if (vars->y_pos - 5 < 0)
-		return (0);
-	else
-		return (vars->y_pos - 5);
-}
-
-int	get_y_end(t_so_long *vars)
-{
-	int	len_y;
-	len_y = get_nb_rows(vars->map);
-	if (len_y < 12)
-		return (len_y - 1);
-	else if (vars->y_pos - 5 < 0)
-		return (10);
-	else if (vars->y_pos + 5 > len_y - 1)
-		return (len_y - 1);
-	else
-		return (vars->y_pos + 5);
+	len_map = get_nb_rows(map);
+	i = 0;
+	while ( i < len_map)
+	{
+		free(map[i]);
+		i++;
+	}
 }
 
 
-
-
-char	*get_rowto_display(int y_start, int x_start, int x_end, char **map)
+void	init_map_to_display(t_so_long *vars)
 {
-	char	*row_to_return;
 	int	i;
 
 	i = 0;
-	row_to_return = malloc(12 * sizeof(char));
-	while (x_start <= x_end)
+	vars->map_to_display = malloc(11 * sizeof(char *));
+	while ( i < 11 )
 	{
-		row_to_return[i] = map[y_start][x_start];
-		x_start++;
+		vars->map_to_display[i] = malloc(11 * sizeof(char));
 		i++;
 	}
-	row_to_return[i] = '\0';
-	return (row_to_return);
+}	
+
+
+
+void	update_player_pos(t_so_long *vars);
+
+void	get_map_to_display2(t_so_long *vars, int y_start, int y_end, char **map_to_display)
+{
+	if (y_end >= 11)
+		vars->map_to_display[11] = NULL;
+	else
+		vars->map_to_display[y_start] = NULL;
 }
+
+
 
 void	get_map_to_display(t_so_long *vars)
 {
-	int	x_start;
-	int	x_end;
-	int	y_start;
-	int	y_end;
-	char		**map_to_display;
+	int		x_start;
+	int		x_end;
+	int		y_start;
+	int		y_end;
 
 	x_start = get_x_start(vars);
 	x_end = get_x_end(vars);
 	y_start = get_y_start(vars);
 	y_end = get_y_end(vars);
-	map_to_display = malloc(12 * sizeof(char *));
 	while (y_start <= y_end)
-	{
-		if (y_end > 11)
-			map_to_display[10 - (y_end - y_start)] = get_rowto_display(y_start , x_start , x_end, vars->map);
-		else
-			map_to_display[y_start] = get_rowto_display(y_start , x_start , x_end, vars->map);
+	{	
+		get_rowto_display(y_start, x_start, x_end, vars);
 		y_start++;
 	}
-	if (y_end > 11)
-		map_to_display[11] = NULL;
-	else 
-		map_to_display[y_start] = NULL;
-	vars->map_to_display = map_to_display;
+	get_map_to_display2(vars, y_start, y_end , vars->map_to_display);
 }
-
-
-
-
-
-
-
-
-
 
 void	display_map(t_so_long *vars)
 {
+	int o = 0;
+	while (vars->map_to_display[o])
+	{
+		printf("%s\n", vars->map_to_display[o]);
+		o++;
+	}
 	int	i;
 	int	ii;
 	
-	printf("display \n");
 	i = 0;
 	while (vars->map_to_display[i])
 	{
@@ -157,37 +108,125 @@ void	display_map(t_so_long *vars)
 	}
 }
 
-//void move_left(char **map)
+
+void	move_left(t_so_long *vars)
+{
+	if (vars->map[vars->y_pos][vars->x_pos - 1] == '0')
+	{
+		vars->map[vars->y_pos][vars->x_pos - 1] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+	}
+	else if (vars->map[vars->y_pos][vars->x_pos-1] == 'C')
+	{
+		vars->map[vars->y_pos][vars->x_pos - 1] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->nb_coin = vars->nb_coin - 1;
+	}
+	else if (vars->map[vars->y_pos][vars->x_pos - 1] == 'E')
+	{
+		if (vars->nb_coin == 0)
+		{
+			printf("You win !");
+			exit (0);
+		}
+	}
+}
+
+
+void	move_rigth(t_so_long *vars)
+{
+	if (vars->map[vars->y_pos][vars->x_pos + 1] == '0')
+	{
+		vars->map[vars->y_pos][vars->x_pos + 1] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+	}
+	else if (vars->map[vars->y_pos][vars->x_pos + 1] == 'C')
+	{
+		vars->map[vars->y_pos][vars->x_pos + 1] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->nb_coin = vars->nb_coin - 1;
+	}
+	else if (vars->map[vars->y_pos][vars->x_pos + 1] == 'E')
+	{
+		if (vars->nb_coin == 0)
+		{
+			printf("You win !");
+			exit (0);
+		}
+	}
+}
+
+
+void	move_down(t_so_long *vars)
+{
+	if (vars->map[vars->y_pos - 1][vars->x_pos] == '0')
+	{
+		vars->map[vars->y_pos - 1][vars->x_pos] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+	}
+	else if (vars->map[vars->y_pos - 1][vars->x_pos] == 'C')
+	{
+		vars->map[vars->y_pos - 1][vars->x_pos] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->nb_coin = vars->nb_coin - 1;
+	}
+	else if (vars->map[vars->y_pos - 1][vars->x_pos] == 'E')
+	{
+		if (vars->nb_coin == 0)
+		{
+			printf("You win !");
+			exit (0);
+		}
+	}
+}
+
+
+void	move_up(t_so_long *vars)
+{
+	if (vars->map[vars->y_pos + 1][vars->x_pos] == '0')
+	{
+		vars->map[vars->y_pos + 1][vars->x_pos] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+	}
+	else if (vars->map[vars->y_pos + 1][vars->x_pos] == 'C')
+	{
+		vars->map[vars->y_pos + 1][vars->x_pos] = 'P';
+		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->nb_coin = vars->nb_coin - 1;
+	}
+	else if (vars->map[vars->y_pos][vars->x_pos - 1] == 'E')
+	{
+		if (vars->nb_coin == 0)
+		{
+			printf("You win !");
+			exit (0);
+		}
+	}
+}
 
 
 
-void	update_player_pos(t_so_long *vars);
 
 
 
 int	move_player(int key, t_so_long *vars)
 {
 	if (key == 0)
+		move_left(vars);
+	else if (key == 13)
+		move_down(vars);
+	else if (key == 2)
+		move_rigth(vars);
+	else if (key == 1)
+		move_up(vars);
+	else if (key == 53)
+		exit(0);
+	if (key == 1 || key == 2 || key == 13 || key ==0)
 	{
-		vars->map[7][1] = '0';
-		vars->map[7][2] = 'P';
 		update_player_pos(vars);
 		get_map_to_display(vars);
 		display_map(vars);
-		printf("0\n");
-	//	move_left(map);
 	}
-	else if (key == 1)
-	//	move_down(map);
-		printf("1\n");
-	else if (key == 2)
-	//	move_rigth(map);
-		printf("2\n");
-	else if (key == 13)
-	//	move_up(map);
-		printf("13\n");
-	else if (key == 53)
-		exit(0);
 	return (0);
 }
 
@@ -230,10 +269,10 @@ void	so_long(char **map)
 
 
 	vars.map = map;
+	init_map_to_display(&vars);
 	vars.mlx = mlx_init();
 	vars.mlx_win = mlx_new_window(vars.mlx, ft_strlen(map[0]) * 60, get_nb_rows(map) * 60, "so_long");
 	update_player_pos(&vars);
-	//display_map(&vars);
 	get_map_to_display(&vars);
 	int i = 0;
 	while (vars.map_to_display[i])
