@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 12:01:09 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/19 12:02:39 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:36:02 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	check_map(char **map)
 	check_caracter(map);
 	check_element(map, 'E');
 	check_element(map, 'C');
+	check_element_diff(map);
 }
 

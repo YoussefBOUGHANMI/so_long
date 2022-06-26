@@ -6,27 +6,32 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:13:09 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/19 18:14:40 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/26 22:42:52 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"so_long.h"
 
-void	display_player(void *mlx, void *mlx_win, int x, int y)
+void	display_player(t_so_long *vars,int x, int y)
 {
-	char	*relative_path = "./tiles/player.xpm";
+	char		*relative_path;
 	int		img_width;
 	int		img_height;
 	void	*img;
-
-	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
+	if (vars->direction == 0)
+		relative_path = "./tiles/player_left.xpm";
+	else if (vars->direction == 1)
+		relative_path = "./tiles/player_rigth.xpm";
+	if (vars->dead == 1)
+		relative_path = "./tiles/player_dead.xpm";
+	img = mlx_xpm_file_to_image(vars->mlx, relative_path, &img_width, &img_height);
 	if ((int)img == 0)
 	{
 		ft_putstr_fd("ERROR \n:Le programme n'a pas reussi à charger l'image player \n", 2);
 		exit(-1);
 	}
-	mlx_put_image_to_window(mlx,mlx_win,img,x , y);
-	mlx_destroy_image(mlx, img);
+	mlx_put_image_to_window(vars->mlx,vars->mlx_win,img,x , y);
+	mlx_destroy_image(vars->mlx, img);
 }
 
 void	display_wall(void *mlx, void *mlx_win, int x, int y)

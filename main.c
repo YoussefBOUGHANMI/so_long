@@ -6,7 +6,7 @@
 /*   By: youssef <youssef.boughanmi.pro@gmail.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 17:59:19 by youssef           #+#    #+#             */
-/*   Updated: 2022/06/21 22:23:03 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/26 22:42:01 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,10 @@ void	get_map_to_display(t_so_long *vars)
 	get_map_to_display2(vars, y_start, y_end , vars->map_to_display);
 }
 
+
+
 void	display_map(t_so_long *vars)
 {
-	int o = 0;
-	while (vars->map_to_display[o])
-	{
-		printf("%s\n", vars->map_to_display[o]);
-		o++;
-	}
 	int	i;
 	int	ii;
 	
@@ -95,32 +91,47 @@ void	display_map(t_so_long *vars)
 			if (vars->map_to_display[i][ii] == 'C')
 				display_coin(vars->mlx, vars->mlx_win, ii*60 , i*60);
 			if (vars->map_to_display[i][ii] == 'P')
-				display_player(vars->mlx, vars->mlx_win, ii*60, i*60);
+				display_player(vars, ii*60, i*60);
 			if (vars->map_to_display[i][ii] == '1')
 				display_wall(vars->mlx, vars->mlx_win, ii*60, i*60);
 			if (vars->map_to_display[i][ii] == '0')
 				display_floor(vars->mlx, vars->mlx_win, ii*60, i*60);
 			if (vars->map_to_display[i][ii] == 'E')
 				display_door(vars->mlx, vars->mlx_win, ii*60, i*60);
+			if (vars->map_to_display[i][ii] == 'M')
+				display_monster(vars->mlx, vars->mlx_win, ii*60, i*60);
 			ii++;
 		}
 		i++;
 	}
+	mlx_string_put(vars->mlx ,vars->mlx_win, 25 , 25, 16777215 , ft_itoa(vars->counter));
 }
+
+
+void	check_monster(t_so_long *vars , char c)
+{
+	int i = 0;
+	if (c == 'M')
+		vars->dead = 1;
+}
+
 
 
 void	move_left(t_so_long *vars)
 {
+	check_monster(vars , vars->map[vars->y_pos][vars->x_pos - 1]);
 	if (vars->map[vars->y_pos][vars->x_pos - 1] == '0')
 	{
 		vars->map[vars->y_pos][vars->x_pos - 1] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos][vars->x_pos-1] == 'C')
 	{
 		vars->map[vars->y_pos][vars->x_pos - 1] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
 		vars->nb_coin = vars->nb_coin - 1;
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos][vars->x_pos - 1] == 'E')
 	{
@@ -130,6 +141,7 @@ void	move_left(t_so_long *vars)
 			exit (0);
 		}
 	}
+	vars->direction = 0;
 }
 
 
@@ -139,12 +151,14 @@ void	move_rigth(t_so_long *vars)
 	{
 		vars->map[vars->y_pos][vars->x_pos + 1] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos][vars->x_pos + 1] == 'C')
 	{
 		vars->map[vars->y_pos][vars->x_pos + 1] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
 		vars->nb_coin = vars->nb_coin - 1;
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos][vars->x_pos + 1] == 'E')
 	{
@@ -154,6 +168,7 @@ void	move_rigth(t_so_long *vars)
 			exit (0);
 		}
 	}
+	vars->direction = 1;
 }
 
 
@@ -163,12 +178,14 @@ void	move_down(t_so_long *vars)
 	{
 		vars->map[vars->y_pos - 1][vars->x_pos] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos - 1][vars->x_pos] == 'C')
 	{
 		vars->map[vars->y_pos - 1][vars->x_pos] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
 		vars->nb_coin = vars->nb_coin - 1;
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos - 1][vars->x_pos] == 'E')
 	{
@@ -187,12 +204,14 @@ void	move_up(t_so_long *vars)
 	{
 		vars->map[vars->y_pos + 1][vars->x_pos] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos + 1][vars->x_pos] == 'C')
 	{
 		vars->map[vars->y_pos + 1][vars->x_pos] = 'P';
 		vars->map[vars->y_pos][vars->x_pos] = '0';
 		vars->nb_coin = vars->nb_coin - 1;
+		vars->counter++;
 	}
 	else if (vars->map[vars->y_pos][vars->x_pos - 1] == 'E')
 	{
@@ -207,10 +226,16 @@ void	move_up(t_so_long *vars)
 
 
 
-
+void	quit_cause_dead(void)
+{
+	ft_putstr_fd("ERROR \n: Sorry you lose try again ! \n", 2);
+	exit(0);
+}
 
 int	move_player(int key, t_so_long *vars)
 {
+	if (vars->dead == 1)
+		exit(0);
 	if (key == 0)
 		move_left(vars);
 	else if (key == 13)
@@ -259,31 +284,91 @@ void	update_player_pos(t_so_long *vars)
 		x++;
 	vars->x_pos = x;
 	vars->y_pos = y;
-	printf("%i , %i \n" , x, y );
+}
+
+int	ft_count_coin(char **map)
+{
+	int	i;
+	int	ii;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while (map[i])
+	{
+		ii = 0;
+		while (map[i][ii])
+		{
+			if (map[i][ii] == 'C')
+				nb++;
+			ii++;
+		}
+		i++;
+	}
+	return (nb);
+}
+
+
+void	init_mlx_win(t_so_long *vars)
+{
+	int	nb_rows;
+	int	nb_cols;
+
+	nb_rows = get_nb_rows(vars->map);
+	nb_cols = ft_strlen(vars->map[0]);
+	if (nb_rows < 12 && nb_cols < 12)
+		vars->mlx_win = mlx_new_window(vars->mlx, ft_strlen(vars->map[0]) * 60, get_nb_rows(vars->map) * 60, "so_long");
+	else if (nb_rows > 12 && nb_cols > 12)
+		vars->mlx_win = mlx_new_window(vars->mlx, 11 * 60, 11 * 60, "so_long");
+	else if (nb_rows > 12 && nb_cols < 12)
+		vars->mlx_win = mlx_new_window(vars->mlx, ft_strlen(vars->map[0]) * 60, 11 * 60, "so_long");
+	else if (nb_rows < 12 && nb_cols > 12)
+		vars->mlx_win = mlx_new_window(vars->mlx, 11 * 60, get_nb_rows(vars->map) * 60, "so_long");
 }
 
 
 void	so_long(char **map)
 {
 	t_so_long	vars;
-
-
+	
+	vars.direction = 0;
+	vars.dead  = 0;
+	vars.counter = 0;
+	vars.nb_coin = ft_count_coin(map);
 	vars.map = map;
-	init_map_to_display(&vars);
 	vars.mlx = mlx_init();
-	vars.mlx_win = mlx_new_window(vars.mlx, ft_strlen(map[0]) * 60, get_nb_rows(map) * 60, "so_long");
+	init_mlx_win(&vars);
+	init_map_to_display(&vars);
 	update_player_pos(&vars);
 	get_map_to_display(&vars);
-	int i = 0;
-	while (vars.map_to_display[i])
-	{
-		printf(":::::    %s\n" , vars.map_to_display[i]);
-		i++;
-	}
 	display_map(&vars);
-	printf("ok\n");
 	mlx_key_hook(vars.mlx_win, move_player, &vars);
 	mlx_loop(vars.mlx);
+}
+
+
+void	check_element_diff(char **map)
+{
+	int	i;
+	int	ii;
+
+	i = 0;
+	while(map[i])
+	{
+		ii = 0;
+		while(map[i][ii])
+		{
+			if (map[i][ii] != '1' && map[i][ii] != '0' && map[i][ii] != 'C' &&
+				map[i][ii] != 'P' && map[i][ii] != 'M' && map[i][ii] != 'E')
+			{
+				ft_putstr_fd("ERROR \n:La map ne respecte pas les régles (élement non défini) \n", 2);
+				exit(-1);
+			}
+			ii++;
+
+		}
+		i++;
+	}
 }
 
 int main(int argc, char **argv)

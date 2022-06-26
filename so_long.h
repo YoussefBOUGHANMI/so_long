@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:01:33 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/21 22:07:15 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/26 22:28:52 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_so_long
 	int		counter;
 	int		nb_coin;
 	int		top_free;
+	int		direction;
+	int		dead;
 	void	*mlx;
 	void	*mlx_win;
 	char	**map;
@@ -54,15 +56,18 @@ void	check_borders(char **map);
 void	check_firstlast_rows(char **map , int nb_rows);
 void	check_len_rows(char **map);
 int	get_nb_rows(char **map);
-void	display_player(void *mlx, void *mlx_win, int x, int y);
+void	display_player(t_so_long *vars, int x, int y);
 void	display_coin(void *mlx, void *mlx_win, int x, int y);
 void	display_wall(void *mlx, void *mlx_win, int x, int y);
 void	display_door(void *mlx, void *mlx_win, int x, int y);
 void	display_floor(void *mlx, void *mlx_win, int x, int y);
+void	display_monster(void *mlx, void *mlx_win, int x, int y);
 int	get_x_start(t_so_long *vars);
 int	get_x_end(t_so_long *vars);
 int	get_y_start(t_so_long *vars);
 int	get_y_end(t_so_long *vars);
+char	*ft_itoa(int n);
 void	get_rowto_display(int y_start, int x_start, int x_end, t_so_long *vars);
+void	check_element_diff(char **map);
 
 #endif
