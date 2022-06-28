@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:41:32 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/21 22:08:43 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:24:28 by yboughan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	get_y_start(t_so_long *vars)
 	int	len_y;
 
 	len_y = get_nb_rows(vars->map);
-	printf("len : %i\n" , len_y);
 	if (len_y < 12)
 		return (0);
 	else if (vars->y_pos + 5 > len_y - 1)
