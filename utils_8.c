@@ -6,7 +6,7 @@
 /*   By: youssef <yboughan@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:18:40 by youssef           #+#    #+#             */
-/*   Updated: 2022/06/28 20:03:34 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:50:01 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	init_map_to_display(t_so_long *vars)
 	}
 }
 
-void	get_map_to_display2(t_so_long *vars, int y_start, int y_end,
-		char **map_to_display)
+void	get_map_to_display2(t_so_long *vars, int y_start, int y_end)
 {
 	if (y_end >= 11)
 		vars->map_to_display[11] = NULL;
@@ -58,7 +57,7 @@ void	get_map_to_display(t_so_long *vars)
 		get_rowto_display(y_start, x_start, x_end, vars);
 		y_start++;
 	}
-	get_map_to_display2(vars, y_start, y_end, vars->map_to_display);
+	get_map_to_display2(vars, y_start, y_end);
 }
 
 void	display_map_2(t_so_long *vars, int i, int ii)

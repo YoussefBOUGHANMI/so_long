@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 08:58:53 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/28 20:21:08 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:47:41 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	check_len_rows(char **map)
 	len_row = ft_strlen(map[0]);
 	while (map[i])
 	{
-		if (ft_strlen(map[i]) != len_row)
+		if ((int)ft_strlen(map[i]) != len_row)
 		{
 			ft_putstr_fd("ERROR \n:La map ne respecte ", 2);
 			ft_putstr_fd("pas les régles (len rows)\n", 2);

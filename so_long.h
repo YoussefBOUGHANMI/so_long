@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:01:33 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/28 20:17:28 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:49:23 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ void	get_rowto_display(int y_start, int x_start, int x_end, t_so_long *vars);
 void	check_element_diff(char **map);
 void	free_map(char **map);
 void	init_map_to_display(t_so_long *vars);
-void	get_map_to_display2(t_so_long *vars, int y_start, int y_end,
-			char **map_to_display);
+void	get_map_to_display2(t_so_long *vars, int y_start, int y_end);
 void	get_map_to_display(t_so_long *vars);
 void	display_map_2(t_so_long *vars, int i, int ii);
 void	display_map(t_so_long *vars);
