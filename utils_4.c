@@ -6,13 +6,13 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 12:01:09 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/26 19:36:02 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:44:42 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"so_long.h"
 
-void	check_firstlast_rows(char **map , int nb_rows)
+void	check_firstlast_rows(char **map, int nb_rows)
 {
 	int	i;
 
@@ -21,7 +21,8 @@ void	check_firstlast_rows(char **map , int nb_rows)
 	{
 		if (map[0][i] != '1' || map[nb_rows - 1][i] != '1')
 		{
-			ft_putstr_fd("ERROR \n:La map ne respecte pas les régles (last first rows) \n", 2);
+			ft_putstr_fd("ERROR \n:La map ne respecte pas", 2);
+			ft_putstr_fd("les régles (last first rows) \n", 2);
 			exit(-1);
 		}
 		i++;
@@ -39,7 +40,8 @@ void	check_borders(char **map)
 	{
 		if (map[i][0] != '1' || map[i][len_rows - 1] != '1')
 		{
-			ft_putstr_fd("ERROR \n:La map ne respecte pas les régles (borders) \n", 2);
+			ft_putstr_fd("ERROR \n:La map ne respecte pas ", 2);
+			ft_putstr_fd("les régles (borders) \n", 2);
 			exit(-1);
 		}
 		i++;
@@ -48,7 +50,6 @@ void	check_borders(char **map)
 
 void	check_caracter(char **map)
 {
-
 	int	nb_carac;
 	int	i;
 	int	ii;
@@ -68,14 +69,14 @@ void	check_caracter(char **map)
 	}
 	if (nb_carac != 1)
 	{
-		ft_putstr_fd("ERROR \n:La map ne respecte pas les régles (Caracter) \n", 2);
+		ft_putstr_fd("ERROR \n:La map ne respecte pas ", 2);
+		ft_putstr_fd("les régles (Caracter) \n", 2);
 		exit(-1);
 	}
 }
 
-void	check_element(char **map , char el)
+void	check_element(char **map, char el)
 {
-
 	int	nb_el;
 	int	i;
 	int	ii;
@@ -95,14 +96,15 @@ void	check_element(char **map , char el)
 	}
 	if (nb_el < 1)
 	{
-		ft_putstr_fd("ERROR \n:La map ne respecte pas les régles (Exit or Coin) \n", 2);
+		ft_putstr_fd("ERROR \n:La map ne respecte pas ", 2);
+		ft_putstr_fd("les régles (Exit or Coin) \n", 2);
 		exit(-1);
 	}
 }
 
 void	check_map(char **map)
 {
-	int nb_rows;
+	int	nb_rows;
 
 	nb_rows = get_nb_rows(map);
 	check_len_rows(map);
@@ -113,4 +115,3 @@ void	check_map(char **map)
 	check_element(map, 'C');
 	check_element_diff(map);
 }
-

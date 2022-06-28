@@ -6,10 +6,9 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 08:55:26 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/19 08:58:43 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/28 20:20:20 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include"so_long.h"
 
@@ -60,17 +59,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (dst);
 }
 
-char const	*ft_cp(char const *s, char c, char **new_word)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	*new_word = ft_substr(s, 0, i);
-	return (s + i);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len_s1;
@@ -98,7 +86,6 @@ void	check_file_map(char *path_map)
 	int	len_path;
 
 	fd = open(path_map, O_RDONLY);
-	
 	if (fd < 0)
 	{
 		perror("ERROR \n");
@@ -112,4 +99,17 @@ void	check_file_map(char *path_map)
 	}	
 }
 
+int	get_nb_rows(char **map)
+{
+	int	nb_rows;
 
+	nb_rows = 0;
+	while (map[nb_rows])
+		nb_rows++;
+	if (nb_rows < 3)
+	{
+		ft_putstr_fd("ERROR \n:La map ne respecte pas les régles \n", 2);
+		exit(-1);
+	}
+	return (nb_rows);
+}

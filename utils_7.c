@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 19:15:53 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/26 22:28:32 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:59:29 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 void	display_monster(void *mlx, void *mlx_win, int x, int y)
 {
-	char	*relative_path = "./tiles/monster.xpm";
+	char	*relative_path;
 	int		img_width;
 	int		img_height;
 	void	*img;
 
+	relative_path = "./tiles/monster.xpm";
 	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
 	if ((int)img == 0)
 	{
-		ft_putstr_fd("ERROR \n:Le programme n'a pas reussi à charger l'image monster \n", 2);
+		ft_putstr_fd("ERROR \n:Le programme n'a pas reussi ", 2);
+		ft_putstr_fd("à charger l'image monster \n", 2);
 		exit(-1);
 	}
-	mlx_put_image_to_window(mlx,mlx_win,img,x , y);
+	mlx_put_image_to_window(mlx, mlx_win, img, x, y);
 	mlx_destroy_image(mlx, img);
 }
-
 
 int	len_n(int n)
 {
@@ -81,3 +82,16 @@ char	*ft_itoa(int n)
 	return (a);
 }
 
+void	free_map(char **map)
+{
+	int	len_map;
+	int	i;
+
+	len_map = get_nb_rows(map);
+	i = 0;
+	while (i < len_map)
+	{
+		free(map[i]);
+		i++;
+	}
+}

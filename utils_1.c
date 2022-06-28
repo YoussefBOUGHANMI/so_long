@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 08:52:57 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/19 08:55:17 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:31:57 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	dest[i] = 0;
 	return (lensrc);
 }
-

@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:41:32 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/27 19:24:28 by yboughan         ###   ########.fr       */
+/*   Updated: 2022/06/28 19:57:47 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	get_y_start(t_so_long *vars)
 int	get_y_end(t_so_long *vars)
 {
 	int	len_y;
+
 	len_y = get_nb_rows(vars->map);
 	if (len_y < 12)
 		return (len_y - 1);
@@ -81,14 +82,15 @@ void	get_rowto_display(int y_start, int x_start, int x_end, t_so_long *vars)
 	while (x_start <= x_end)
 	{
 		if (y_end >= 11)
-			vars->map_to_display[10 - (y_end - y_start)][i] = vars->map[y_start][x_start];
-		else 
+			vars->map_to_display[10 - (y_end - y_start)][i]
+				= vars->map[y_start][x_start];
+		else
 			vars->map_to_display[y_start][i] = vars->map[y_start][x_start];
 		x_start++;
 		i++;
 	}
 	if (y_end >= 11)
-		vars->map_to_display[10 - (y_end - y_start)][i] = '\0' ; 
+		vars->map_to_display[10 - (y_end - y_start)][i] = '\0';
 	else
 		vars->map_to_display[y_start][i] = '\0';
 }
