@@ -6,7 +6,7 @@
 /*   By: youssef <yboughan@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:18:40 by youssef           #+#    #+#             */
-/*   Updated: 2022/06/28 20:50:01 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:48:59 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	init_map_to_display(t_so_long *vars)
 	if (nb_cols > 11)
 		nb_cols = 11;
 	i = 0;
-	vars->map_to_display = malloc(nb_rows * sizeof(char *));
+	vars->map_to_display = malloc((nb_rows + 1) * sizeof(char *));
 	while (i < nb_rows)
 	{
-		vars->map_to_display[i] = malloc(nb_cols * sizeof(char));
+		vars->map_to_display[i] = malloc((nb_cols + 1) * sizeof(char));
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yboughan <yboughan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 09:01:33 by yboughan          #+#    #+#             */
-/*   Updated: 2022/06/28 20:49:23 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:35:35 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	move_left(t_so_long *vars);
 void	move_rigth(t_so_long *vars);
 void	move_down(t_so_long *vars);
 void	move_up(t_so_long *vars);
-void	quit_cause_dead(void);
+void	quit_cause_dead(t_so_long *vars);
 int		move_player(int key, t_so_long *vars);
 char	*ft_strchr(const char *s, int c);
 void	update_player_pos(t_so_long *vars);

@@ -6,22 +6,24 @@
 /*   By: youssef <yboughan@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:21:40 by youssef           #+#    #+#             */
-/*   Updated: 2022/06/28 20:07:19 by youssef          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:37:41 by youssef          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"so_long.h"
 
-void	quit_cause_dead(void)
+void	quit_cause_dead(t_so_long *vars)
 {
+	free_map(vars->map_to_display);
+	free_map(vars->map);
 	ft_putstr_fd("Sorry you lose try again ! \n", 0);
-	exit(0);
+	exit(-1);
 }
 
 int	move_player(int key, t_so_long *vars)
 {
 	if (vars->dead == 1)
-		quit_cause_dead();
+		quit_cause_dead(vars);
 	if (key == 0)
 		move_left(vars);
 	else if (key == 13)
